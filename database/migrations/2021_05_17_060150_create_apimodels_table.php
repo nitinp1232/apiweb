@@ -15,6 +15,8 @@ class CreateApimodelsTable extends Migration
     {
         Schema::create('apimodels', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('email');
             $table->timestamps();
         });
     }
