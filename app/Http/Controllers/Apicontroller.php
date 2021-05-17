@@ -11,9 +11,11 @@ class Apicontroller extends Controller
         if($req->id){
         $result = Apimodel :: find($req->id);
         if($result){
-            return $result;
+            return response()->json($result, 201);
         }else{
-            return ["result"=>"Not found"];
+            return response()->json([
+                "message" => "not found"
+            ], 404);
         }        
         }else     
         return Apimodel:: all();
@@ -23,27 +25,39 @@ class Apicontroller extends Controller
         $apimodel = new Apimodel;
         $result = $apimodel->insert($req->input());
         if($result){
-            return ["result"=>"Data posted"];
+            return response()->json([
+                "message" => "record created"
+            ], 201);
         }else{
-            return ["result"=>"Not Posted"];
+            return response()->json([
+                "message" => "not created"
+            ], 404);
         }
     }
     public function put(Request $req){
         $apimodel = new Apimodel;
         $data= $apimodel->find($req->id)->update($req->input());
         if($data){
-            return ["result"=>"Data updated"];
+            return response()->json([
+                "message" => "record updated"
+            ], 201);
         }else{
-            return ["result"=>"Not updated"];
+            return response()->json([
+                "message" => "record not updated"
+            ], 404);
         }
     }
     public function delete(Request $req){
         $apimodel = new Apimodel;
         $data = $apimodel->find($req->id)->delete();
         if($data){
-            return ["result"=>"Data Deleted"];
+            return response()->json([
+                "message" => "record deleted"
+            ], 201);
         }else{
-            return ["result"=>"Not Deleted"];
+            return response()->json([
+                "message" => "record not deleted"
+            ], 404);
         }
     }
 
@@ -51,9 +65,11 @@ class Apicontroller extends Controller
         $apimodel = new Apimodel;
         $data = $apimodel->where('name', 'LIKE', '%'.$name.'%')->get();
         if($data){
-            return $data;
+            return response()->json($data, 201);
         }else{
-            return ["result"=>"Not Found"];
+            return response()->json([
+                "message" => "record not found"
+            ], 404);
         }
     }
 }
